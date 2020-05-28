@@ -69,7 +69,7 @@ class ProductController extends Controller
 
     public function update(Product $product, ProductRequest $request)
     {
-        $product->update($request->except('image'));
+        $product->update($request->except(['image']));
 
         if ($request->has('image')) {
             $product->images()->update($request->image);
@@ -135,7 +135,7 @@ class ProductController extends Controller
         if(count($all_orders))
             $orders = $all_orders->items->where('product_id', $product->id);
 
-        if(count($orders)){
+        if(count($orders) > 0){
                 return response()->json([
                 'status' => 'success',
                 'code' => 200,
